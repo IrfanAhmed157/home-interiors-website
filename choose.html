@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Choose Login Type</title>
+  <style>
+    body {
+            font-family:arial;
+            margin:0;
+            padding:0;
+            background-image: url(https://images.rawpixel.com/image_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTExL3JtNDA1LWMwNGItbW9ja3VwLmpwZw.jpg);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+    header {
+            background-color: darkkhaki;
+            color:black;
+            text-align:center;
+            padding:0.2rem;
+        }
+
+    .login-choice-box {
+      padding: 3rem 4rem;
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+    }
+
+    h1 {
+      margin-bottom: 2rem;
+      color:white;
+    }
+
+    .login-btn {
+      display: block;
+      width: 100%;
+      padding: 1rem;
+      margin: 1rem 0;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+      color: white;
+    }
+
+    .user-btn {
+      background-color: darkcyan;
+      width: 40%;
+      margin-left: 45%;
+    }
+
+    .user-btn:hover {
+      background-color: #3a5d8a;
+    }
+
+    .admin-btn {
+      background-color: darkslategray;
+      width: 40%;
+      margin-left: 45%;
+    }
+
+    .admin-btn:hover {
+      background-color: #444;
+    }
+
+    .back-btn {
+        background-color: darkolivegreen;
+        width: 10%;
+        margin-left: 60%;
+    }
+  </style>
+</head>
+<body>
+
+    <header>
+        <h1 style="font-weight: bold; color: black;"><strong>Maison Interiors</strong></h1>
+        <p style="font-size:large;">Bringing Beauty Home</p>
+    </header>
+
+  <div class="login-choice-box">
+    <h1 style="margin-left: 30%;">Login As:</h1>
+    <button class="login-btn user-btn" onclick="window.location.href='login1.html'">User</button>
+    <button class="login-btn admin-btn" onclick="window.location.href='adminlogin.html'">Admin</button>
+    <button class="login-btn admin-btn back-btn" onclick="window.location.href='homedecor.html'">Back</button>
+  </div>
+
+</body>
+</html>

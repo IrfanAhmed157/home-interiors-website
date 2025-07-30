@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cash on Delivery - Maison Interiors</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-image: url(https://img.freepik.com/premium-vector/white-wall-with-blue-shopping-cart-black-mouse-with-empty-tags-laptop-white-surface_1174726-9278.jpg?ga=GA1.1.260178164.1748454919&semt=ais_hybrid&w=740);
+      background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      margin: 0;
+      padding: 2rem;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    h1 {
+      color: #2e3a59;
+    }
+
+    p {
+      font-size: 1.2rem;
+      color: #333;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1.5rem;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #2e3a59;
+      color: white;
+    }
+
+    .total {
+      font-weight: bold;
+      margin-top: 1rem;
+      font-size: 1.3rem;
+      color: #2e3a59;
+      text-align: right;
+    }
+
+    .btn {
+      margin-top: 2rem;
+      padding: 12px 25px;
+      font-size: 1rem;
+      background-color: #2d3436;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn:hover {
+      background-color: #636e72;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Cash on Delivery Selected</h1>
+    <p>Thank you for your order! Your products will be delivered to your registered address within 5-7 business days.</p>
+    <p>Please keep the cash ready. You will receive a confirmation SMS shortly.</p>
+
+    <h2>Your Order Details</h2>
+    <table id="orderTable">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Quantity</th>
+          <th>Price (₹)</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+      </tbody>
+    </table>
+
+    <div class="total" id="totalAmount"></div>
+
+    <a href="welcome.html" class="btn">Return to Home</a>
+  </div>
+
+  <script>
+    function loadOrderDetails() {
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  if (!currentUser) {
+    document.querySelector("#orderTable tbody").innerHTML = "<tr><td colspan='3'>Please log in to view your order.</td></tr>";
+    document.getElementById("totalAmount").textContent = "";
+    return;
+  }
+
+  const cartKey = 'cart_${currentUser.email}';
+  const cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+
+  const tbody = document.querySelector("#orderTable tbody");
+  tbody.innerHTML = "";
+
+  if (cart.length === 0) {
+    tbody.innerHTML = "<tr><td colspan='3'>No items found in your order.</td></tr>";
+    document.getElementById("totalAmount").textContent = "";
+    return;
+  }
+
+  let total = 0;
+  cart.forEach(item => {
+    const tr = document.createElement("tr");
+
+    const name = item.name || "Unnamed Product";
+    const qty = item.quantity || 1;
+    const price = item.price || 0;
+
+    total += price * qty;
+
+    tr.innerHTML = `
+      <td>${name}</td>
+      <td>${qty}</td>
+      <td>₹${(price * qty).toFixed(2)}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  document.getElementById("totalAmount").textContent = Total Amount: ₹${total.toFixed(2)};
+
+  localStorage.removeItem(cartKey);
+}
+
+
+
+    window.onload = loadOrderDetails;
+  </script>
+
+</body>
+</html>

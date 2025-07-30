@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Payment - Maison Interiors</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-image: url(https://static.vecteezy.com/system/resources/thumbnails/002/006/967/small_2x/young-women-takes-a-shopping-cart-and-enjoy-online-shopping-through-smartphones-choose-to-buy-gifts-valentine-s-day-concepts-website-or-mobile-phone-application-flat-design-illustration-vector.jpg);
+      background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      background-color: #2e3a59;
+      color: white;
+      width: 100%;
+      padding: 2rem;
+      text-align: center;
+      font-size: 1.8rem;
+      margin-bottom: 3rem;
+    }
+
+    .payment-container {
+      background: white;
+      padding: 2rem 3rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 1.5rem;
+    }
+
+    .summary-box {
+      background-color: #f0f4f8;
+      padding: 1.5rem;
+      border-radius: 8px;
+      text-align: left;
+      margin-bottom: 2rem;
+      font-size: 1.1rem;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+
+    .summary-line {
+      display: flex;
+      justify-content: space-between;
+      margin: 0.5rem 0;
+    }
+
+    .summary-line.total {
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: #2e3a59;
+      border-top: 1px solid #ccc;
+      padding-top: 0.8rem;
+      margin-top: 1rem;
+    }
+
+    .payment-btn {
+      display: block;
+      width: 100%;
+      padding: 1rem;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      color: white;
+    }
+
+    .cod-btn {
+      background-color: #4caf50;
+    }
+    .cod-btn:hover {
+      background-color: #43a047;
+    }
+
+    .upi-btn {
+      background-color: #2196f3;
+    }
+    .upi-btn:hover {
+      background-color: #1976d2;
+    }
+
+    .back-btn {
+      background-color: #4a6fa5;
+      color: white;
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 1rem;
+      display: inline-block;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+<header>💳 Payment Options - Maison Interiors</header>
+
+<div class="payment-container">
+  <h2>Select Payment Method</h2>
+
+  <div class="summary-box" id="total-display">
+    
+  </div>
+
+  <button class="payment-btn cod-btn" onclick="window.location.href='cod.html'">Cash on Delivery</button>
+  <button class="payment-btn upi-btn" onclick="window.location.href='upi.html'">UPI Payment</button>
+
+  <a href="cart.html" class="back-btn">← Back to Cart</a>
+</div>
+
+<script>
+  function calculateTotalWithGST() {
+  const GST_PERCENT = 12;
+
+const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  if (!currentUser) {
+    document.getElementById('total-display').innerHTML = "<p>Please log in to view your cart.</p>";
+    return;
+  }
+
+  const cartKey = cart_${currentUser.email};
+  let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+
+  const display = document.getElementById('total-display');
+
+  if (cart.length === 0) {
+    display.innerHTML = "<p>Your cart is empty.</p>";
+    return;
+  }
+
+  let subtotal = 0;
+  cart.forEach(item => {
+    subtotal += item.price * item.quantity;
+  });
+
+  const gstAmount = (subtotal * GST_PERCENT) / 100;
+  const grandTotal = subtotal + gstAmount;
+
+  display.innerHTML = `
+    <div class="summary-line">
+      <span>Subtotal:</span>
+      <span>₹${subtotal.toLocaleString()}</span>
+    </div>
+    <div class="summary-line">
+      <span>GST (${GST_PERCENT}%):</span>
+      <span>₹${gstAmount.toFixed(2)}</span>
+    </div>
+    <div class="summary-line total">
+      <span>Grand Total:</span>
+      <span>₹${grandTotal.toFixed(2)}</span>
+    </div>
+  `;
+}
+
+window.onload = calculateTotalWithGST;
+
+</script>
+
+</body>
+</html>

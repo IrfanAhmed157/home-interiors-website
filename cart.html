@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cart - Maison Interiors</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-image: url(https://png.pngtree.com/background/20210714/original/pngtree-gold-marble-white-gray-marble-pattern-texture-abstract-background-panoramic-marbling-picture-image_1226683.jpg);
+      background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    header {
+      background-color: goldenrod;
+      color: white;
+      padding: 2rem;
+      text-align: center;
+      font-size: 1.8rem;
+    }
+
+    .cart-container {
+      max-width: 1000px;
+      margin: 2rem auto;
+      background: white;
+      border-radius: 10px;
+      padding: 2rem;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .cart-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 1rem;
+    }
+
+    .cart-item img {
+      width: 120px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 5px;
+      margin-right: 1rem;
+    }
+
+    .item-details {
+      flex: 1;
+    }
+
+    .item-details h3 {
+      margin: 0 0 0.3rem 0;
+    }
+
+    .item-details p {
+      margin: 0.2rem 0;
+    }
+
+    .remove-btn {
+      background-color: #c0392b;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .total {
+      text-align: right;
+      font-size: 1.4rem;
+      font-weight: bold;
+      margin-top: 1.5rem;
+    }
+
+    .cart-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 2rem;
+    }
+
+    .cart-buttons button {
+      padding: 1rem 2rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .buy-btn {
+      background-color: #4caf50;
+      color: white;
+    }
+
+    .back-btn {
+      background-color: darkslategrey;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+<header>🛒 Your Cart - Maison Interiors</header>
+
+<div class="cart-container" id="cart-container">
+  
+</div>
+
+<script>
+  function loadCart() {
+    const cartContainer = document.getElementById("cart-container");
+
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    if (!currentUser) {
+      cartContainer.innerHTML = "<h3>Please log in to view your cart.</h3>";
+      return;
+    }
+
+    const cartKey = 'cart_${currentUser.email}';
+    let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+
+    if (cart.length === 0) {
+      cartContainer.innerHTML = "<h3>Your cart is empty.</h3>";
+      return;
+    }
+
+    let total = 0;
+    cartContainer.innerHTML = "";
+
+    cart.forEach((item, index) => {
+      const itemTotal = item.price * item.quantity;
+      total += itemTotal;
+
+      const itemDiv = document.createElement("div");
+      itemDiv.classList.add("cart-item");
+
+      itemDiv.innerHTML = `
+        <img src="${item.img}" alt="${item.name}">
+        <div class="item-details">
+          <h3>${item.name}</h3>
+          <p>Price: ₹${item.price.toLocaleString()}</p>
+          <p>Quantity: ${item.quantity}</p>
+          <p>Total: ₹${itemTotal.toLocaleString()}</p>
+        </div>
+        <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
+      `;
+
+      cartContainer.appendChild(itemDiv);
+    });
+
+    const gst = Math.round(total * 0.05);
+    const grandTotal = total
+
+    const totalDiv = document.createElement("div");
+    totalDiv.classList.add("total");
+    totalDiv.innerHTML = `
+      <p>Subtotal: ₹${total.toLocaleString()}</p>
+      <p><strong>Grand Total: ₹${grandTotal.toLocaleString()}</strong></p>
+    `;
+    cartContainer.appendChild(totalDiv);
+
+    const buttonsDiv = document.createElement("div");
+    buttonsDiv.classList.add("cart-buttons");
+    buttonsDiv.innerHTML = `
+      <button class="back-btn" onclick="window.location.href='shop.html'">Back to Shop</button>
+      <button class="buy-btn" onclick="window.location.href='payment.html'">Buy Now</button>
+    `;
+    cartContainer.appendChild(buttonsDiv);
+  }
+
+  function removeItem(index) {
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    const cartKey =' cart_${currentUser.email}';
+    let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+
+    cart.splice(index, 1);
+    localStorage.setItem(cartKey, JSON.stringify(cart));
+    loadCart();
+  }
+
+  window.onload = loadCart;
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Order Confirmation - Maison Interiors</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-image: url(https://img.freepik.com/free-photo/bags-with-gifts-top-copy-space_23-2148288233.jpg);
+      background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 80px auto;
+      background-color: cornsilk;
+      padding: 40px;
+      margin-left: 33%;
+      margin-top: 5%;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      color: #2ecc71;
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 1.1rem;
+      color: #333;
+    }
+
+    .product-list {
+      margin-top: 30px;
+      text-align: left;
+    }
+
+    .product-item {
+      border-bottom: 1px solid #ddd;
+      padding: 10px 0;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .product-item img {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    .product-name {
+      font-weight: bold;
+      color: #2c3e50;
+    }
+
+    .total-amount {
+      margin-top: 25px;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+    .back-btn{
+        background-color: darkslategray;
+        width: 25%;
+        margin-left: 30%;
+        margin-top: 1rem;
+        margin-bottom: 4rem;;
+        color: white;
+        padding: 15px;
+        cursor: pointer;
+    }
+    .back-btn:hover{
+        background-color: darkslategrey;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>🎉 Payment Successful!</h1>
+    <p>Your order has been confirmed. Thank you for shopping with Maison Interiors.</p>
+
+    <div class="product-list" id="productList"></div>
+    <div class="total-amount" id="totalAmount"></div>
+  </div>
+  <button class="back-btn" onclick="window.location.href='welcome.html'">Back To Home</button>
+
+  <script>
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  const productList = document.getElementById("productList");
+  const totalAmountDiv = document.getElementById("totalAmount");
+
+  if (!currentUser) {
+    productList.innerHTML = "<p>Please log in to see your order details.</p>";
+  } else {
+    const cartKey = cart_${currentUser.email};
+    const cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+
+    let total = 0;
+
+    if (cart.length === 0) {
+      productList.innerHTML = "<p>No products found.</p>";
+    } else {
+      cart.forEach(item => {
+        const productDiv = document.createElement("div");
+        productDiv.className = "product-item";
+
+        productDiv.innerHTML = `
+          <img src="${item.img}" alt="${item.name}">
+          <div>
+            <div class="product-name">${item.name}</div>
+            <div>Quantity: ${item.quantity}</div>
+            <div>Price: ₹${item.price}</div>
+          </div>
+        `;
+
+        productList.appendChild(productDiv);
+        total += item.price * item.quantity;
+      });
+
+      totalAmountDiv.textContent = Total Paid: ₹${total.toLocaleString()};
+    }
+
+    
+    localStorage.removeItem(cartKey);
+  }
+</script>
+
+
+</body>
+</html>

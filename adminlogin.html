@@ -1,0 +1,86 @@
+<head>
+    <title> Login </title>
+    <style>
+    body {
+      height: 100vh;
+      background-image:url('https://static.vecteezy.com/system/resources/thumbnails/023/550/315/small/interior-with-armchair-and-coffee-table-ai-generated-photo.jpg');
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+    
+    h2 {
+      margin-bottom: 20px;
+      color: #2e2e2e;
+      padding-left: 820px;
+      font-size: 220%;
+    }
+    input {
+      width: 70%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    button {
+      width: 70%;
+      padding: 12px;
+      background-color: #2d3436;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-top: 8px;
+    }
+    button:hover {
+      background-color: #636e72;
+    }
+    .back-btn{
+        background-color: cornflowerblue;
+    }
+    .back-btn:hover{
+        background-color: cornflowerblue;
+    }
+    </style>
+    
+</head>
+<body>
+  
+    <div>
+        <h2>Welcome To Your Website</h2>
+    <form id="loginForm" style="text-align: center; padding-left: 710px; margin-bottom: 50px;">
+      <input type="text" id="username" placeholder="Username" required >
+      <input type="email" id="email" placeholder="Email" required > 
+      <input type="password" id="password" placeholder="Password" required >
+      <button type="submit"> Sign In</button>
+      <button class="back-btn" onclick="window.location.href='chooselogin.html'">Back</button>
+      
+    </form>
+    </div>
+    
+    <script>
+      document.getElementById("loginForm").addEventListener("submit", function(event)
+    {
+      event.preventDefault();
+      const username= document.getElementById("username").value.trim();
+      const email= document.getElementById("email").value.trim();
+      const password= document.getElementById("password").value.trim();
+      if (username === "" || email === "" || password === ""){
+        alert("Please fill all the details");
+      }else{
+        window.location.href="admin.html";
+      }
+      }
+    );
+      
+    </script>
+    
+</body>
+</html>  

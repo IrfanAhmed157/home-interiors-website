@@ -1,0 +1,201 @@
+<html>
+<head>
+  <title>Maison Interiors - Sofas</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJD1adx61OcGrZvkBnGjp4ZhLtlL4oFG329g&s);
+      background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    header {
+      background-color: #2e3a59;
+      color: white;
+      padding: 3rem;
+      text-align: center;
+      font-size: 1.5rem;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: flex-end;
+      background-image: url(https://upload.wikimedia.org/wikipedia/commons/7/76/HD-hotspot-bg.png);
+      
+      background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        padding: 1rem;
+    }
+
+    .navbar button {
+      margin-left: 1rem;
+      padding: 1.5rem 1.5rem;
+      cursor: pointer;
+      background-color: #4a6fa5;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      padding: 2rem;
+    }
+
+    .product {
+      background: white;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .product img {
+      width: 90%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+
+    .product h3 {
+      margin: 0.5rem 0;
+    }
+
+    .product p {
+      color: green;
+      font-weight: bold;
+    }
+
+    .product button {
+      background-color: #4a6fa5;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 0.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .products {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .products {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header style="font-size: xx-large;"><strong>SOFAS</strong> </header>
+
+<div class="navbar" style="font-size: larger;">
+  <button onclick="window.location.href='shop.html'">Back to Shop</button>
+  <button onclick="window.location.href='cart.html'">Go to Cart</button>
+</div>
+
+<div class="products" id="products-container">
+  </div>
+
+<script>
+  const defaultSofas = [
+    { name: "Modern Recliner", price: 43999, img: "https://m.media-amazon.com/images/I/51gaCREgf3L._AC_UF894,1000_QL80_.jpg" },
+    { name: "L-shaped Sofa", price: 39999, img: "https://indiannest.in/cdn/shop/products/WhatsAppImage2023-04-19at1.46.31PM.jpg?v=1681946425&width=1445" },
+    { name: "3-Seater Sofa", price: 18999, img: "https://www.hometown.in/cdn/shop/files/Baltimor_3Set_HD.jpg?v=1731066543&width=1946" },
+    { name: "Leatherette Sofa", price: 22999, img: "https://torqueindia.co/cdn/shop/products/slouch-2-seater-leatherette-sofa-for-living-room-581214.jpg?v=1706781585" },
+    { name: "Corner Sofa", price: 34999, img: "https://damroimages.blob.core.windows.net/damroimages/11566-1.jpg" },
+    { name: "Wooden Sofa", price: 17999, img: "https://ik.imagekit.io/2xkwa8s1i/img/npl_modified_images/Manilla/WSSFAMNLAN3FOGN/1.jpg?tr=w-1036" },
+    { name: "Chaise Lounge", price: 27999, img: "https://woodenbazar.com/cdn/shop/files/wooden-bazar-luxury-chaise-lounge-sofa-chair-white-and-golden-launge-441_940x.webp?v=1729286197" },
+    { name: "Sofa Bed", price: 21999, img: "https://image.made-in-china.com/202f0j00IkuYZSHKYEcU/Leather-Sofa-Come-Bed-Hotel-Couch-Sofabed-Living-Room-Furniture-Hospital-Care-Sofa-Bed.jpg" },
+    { name: "Classic Sofa", price: 15999, img: "https://media.homecentre.com/i/homecentre/163614948-163614948-HC01062021_01-2100.jpg?fmt=auto&$quality-standard$&sm=c&$prodimg-m-sqr-pdp-2x$" },
+    { name: "Velvet Sofa", price: 19999, img: "https://m.media-amazon.com/images/I/81Fx3pU0cTL._AC_UF894,1000_QL80_.jpg" },
+    { name: "Minimalist Sofa", price: 17999, img: "https://assets.wfcdn.com/im/45123956/compr-r85/2979/297961099/Minimalist+office+sofa.jpg" },
+  ];
+
+  function addToCart(product) {
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  if (!currentUser) {
+    alert("Please log in to add items to your cart.");
+    return;
+  }
+
+  const cartKey = 'cart_${currentUser.email}';
+  let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+
+  const existing = cart.find(item => item.name === product.name);
+  if (existing) {
+    existing.quantity += 1;
+  } else {
+    cart.push({ ...product, quantity: 1 });
+  }
+
+  localStorage.setItem(cartKey, JSON.stringify(cart));
+  alert('${product.name} added to your cart');
+}
+
+function loadSofaProducts() {
+  const storedSofas = JSON.parse(localStorage.getItem("sofas")) || [];
+  const allSofas = [...defaultSofas, ...storedSofas];
+
+  const container = document.getElementById("products-container");
+  container.innerHTML = "";
+
+  allSofas.forEach(product => {
+    const card = document.createElement("div");
+    card.className = "product";
+    card.innerHTML = `
+      <img src="${product.img}" alt="${product.name}">
+      <h3>${product.name}</h3>
+      <p>₹${product.price.toLocaleString()}</p>
+      <button>Add to Cart</button>
+    `;
+
+    card.querySelector("button").addEventListener("click", () => addToCart(product));
+    container.appendChild(card);
+  });
+}
+
+function loadAdminSofas() {
+  const container = document.getElementById("admin-sofa-list");
+  const sofas = JSON.parse(localStorage.getItem("sofas")) || [];
+
+  container.innerHTML = sofas.length ? "" : "<p>No admin-added sofas.</p>";
+
+  sofas.forEach((product, index) => {
+    const card = document.createElement("div");
+    card.className = "product";
+    card.innerHTML = `
+      <img src="${product.img}" alt="${product.name}" style="width:200px; height:150px; object-fit:cover;" />
+      <h3>${product.name}</h3>
+      <p>₹${product.price.toLocaleString()}</p>
+      <button onclick="removeSofa(${index})">Delete</button>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function removeSofa(index) {
+  let sofas = JSON.parse(localStorage.getItem("sofas")) || [];
+  if ('confirm(Are you sure you want to delete "${sofas[index].name}"?') {
+    sofas.splice(index, 1);
+    localStorage.setItem("sofas", JSON.stringify(sofas));
+    loadAdminSofas();
+  }
+}
+
+window.onload = loadSofaProducts;
+
+
+</script>
+
+</body>
+</html>

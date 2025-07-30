@@ -1,0 +1,199 @@
+<html>
+<head>
+  <title>Maison Interiors - Showpieces</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-image: url(https://img.freepik.com/free-photo/red-background-display-your-product_1258-83075.jpg?semt=ais_hybrid&w=740);
+      background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    header {
+      background-color: #8b0000;
+      color: white;
+      padding: 3rem;
+      text-align: center;
+      font-size: 1.5rem;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: flex-end;
+      background-image: url(https://img.freepik.com/free-photo/red-background-display-your-product_1258-83075.jpg?semt=ais_hybrid&w=740);
+      background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      padding: 1rem;
+    }
+
+    .navbar button {
+      margin-left: 1rem;
+      padding: 1.5rem 1.5rem;
+      cursor: pointer;
+      background-color: rgb(209, 7, 7);
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      padding: 2rem;
+    }
+
+    .product {
+      background: white;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .product img {
+      width: 80%;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+
+    .product h3 {
+      margin: 0.5rem 0;
+    }
+
+    .product p {
+      color: green;
+      font-weight: bold;
+    }
+
+    .product button {
+      background-color: brown;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 0.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .products {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .products {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header style="font-size: xx-large;"><strong>SHOWPIECES</strong> </header>
+
+<div class="navbar" style="font-size: larger;">
+  <button onclick="window.location.href='shop.html'">Back to Shop</button>
+  <button onclick="window.location.href='cart.html'">Go to Cart</button>
+</div>
+
+<div class="products" id="products-container">
+  </div>
+
+<script>
+  const defaultShowpieces = [
+    { name: "Peacock Showpiece", price: 4999, img: "https://ouchcart.com/cdn/shop/products/decor07-_2812_29_445x556_f94d680d-7cf0-43be-9683-97c86e080c9d.webp?v=1721372535" },
+    { name: "Giraffe Showpiece", price: 3499, img: "https://m.media-amazon.com/images/I/81d70p1u1pL._AC_UF894,1000_QL80_.jpg" },
+    { name: "Ring Ball Showpiece", price: 1199, img: "https://www.kezevel.com/cdn/shop/products/kezevel-steel-ring-ball-showpiece-handcrafted-golden-ring-ball-table-accent-on-wooden-base-metal-showpiece-for-home-decor-size-1461x1461x2159cm-715758.jpg?v=1693050699" },
+    { name: "Panther Showpiece", price: 3999, img: "https://swastikcreations.com/cdn/shop/files/WlBtEV.jpg?v=1723402245&width=1946" },
+    { name: "Crystal Horse Showpiece", price: 1999, img: "https://www.dekorcompany.com/cdn/shop/products/TakenIn_Dekor_1-03-23-032.png?v=1678255235" },
+    { name: "Metal Showpiece", price: 4599, img: "https://www.thedecorvilla.com/cdn/shop/products/O1CN01HddqkY1DTszO0YqEz__6000000000218-0-cib.jpg?v=1675589164" },
+    { name: "Home Showpiece", price: 1799, img: "https://www.flickkerbox.com/wp-content/uploads/2021/10/HOME.jpg" },
+    { name: "Dolphin Showpiece", price: 999, img: "https://craftzone.in/backend/uploads/products/SKU0000001561/5194f8d3e53683c9adc5de36a2f6ddbe.webp" },
+    { name: "Gramaphone Showpiece", price: 2999, img: "https://images.woodenstreet.de/image/cache/data/manor-house/manor-house-gold-toned-handcrafted-iron-antique-music-decorative-gramophone-showpiece/1-810x702.jpg" },
+    { name: "Duck Showpiece", price: 799, img: "https://www.jiomart.com/images/product/original/rv56sdnozq/pair-of-duck-showpiece-for-home-decor-product-images-orv56sdnozq-p591563990-0-202205241630.jpg?im=Resize=(420,420)" },
+    { name: "Wall Showpiece", price: 1799, img: "https://ashlos.com/cdn/shop/products/61yA9GtfXoL._AC_SL1024.jpg?v=1672020948" },
+    { name: "Globe Showpiece", price: 1799, img: "https://www.mannarcraft.com/uploads/items/03122024122038_44934_2.jpg?q=50" },
+  ];
+
+  function addToCart(product) {
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  if (!currentUser) {
+    alert("Please log in to add items to your cart.");
+    return;
+  }
+
+  const cartKey =' cart_${currentUser.email}';
+  let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+
+  const existing = cart.find(item => item.name === product.name);
+  if (existing) {
+    existing.quantity += 1;
+  } else {
+    cart.push({ ...product, quantity: 1 });
+  }
+
+  localStorage.setItem(cartKey, JSON.stringify(cart));
+  alert('${product.name} added to your cart');
+}
+
+function loadShowpieceProducts() {
+  const storedShowpieces = JSON.parse(localStorage.getItem("showpieces")) || [];
+  const allShowpieces = [...defaultShowpieces, ...storedShowpieces];
+
+  const container = document.getElementById("products-container");
+  container.innerHTML = "";
+
+  allShowpieces.forEach(product => {
+    const card = document.createElement("div");
+    card.className = "product";
+    card.innerHTML = `
+      <img src="${product.img}" alt="${product.name}">
+      <h3>${product.name}</h3>
+      <p>₹${product.price.toLocaleString()}</p>
+      <button>Add to Cart</button>
+    `;
+
+    card.querySelector("button").addEventListener("click", () => addToCart(product));
+    container.appendChild(card);
+  });
+}
+
+function loadAdminShowpieces() {
+  const container = document.getElementById("admin-showpiece-list");
+  const showpieces = JSON.parse(localStorage.getItem("showpieces")) || [];
+
+  container.innerHTML = showpieces.length ? "" : "<p>No admin-added showpieces.</p>";
+
+  showpieces.forEach((product, index) => {
+    const card = document.createElement("div");
+    card.className = "product";
+    card.innerHTML = `
+      <img src="${product.img}" alt="${product.name}" style="width:200px; height:150px; object-fit:cover;" />
+      <h3>${product.name}</h3>
+      <p>₹${product.price.toLocaleString()}</p>
+      <button onclick="removeSofa(${index})">Delete</button>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function removeShowpiece(index) {
+  let showpieces = JSON.parse(localStorage.getItem("showpieces")) || [];
+  if (confirm('Are you sure you want to delete "${showpieces[index].name}"?')) {
+    showpieces.splice(index, 1);
+    localStorage.setItem("showpieces", JSON.stringify(sofas));
+    loadAdminShowpieces();
+  }
+}
+
+window.onload = loadShowpieceProducts;
+</script>
+
+</body>
+</html>

@@ -1,0 +1,200 @@
+<html>
+<head>
+  <title>Maison Interiors - Tables</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-image: url(https://png.pngtree.com/thumb_back/fh260/background/20221030/pngtree-red-for-background-and-display-your-product-bg-luxury-simple-photo-image_40027612.jpg);
+      background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    header {
+      background-color: #5e548e;
+      color: white;
+      padding: 3rem;
+      text-align: center;
+      font-size: 1.5rem;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: flex-end;
+      background-image: url(https://png.pngtree.com/thumb_back/fh260/background/20221030/pngtree-red-for-background-and-display-your-product-bg-luxury-simple-photo-image_40027612.jpg);
+      background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      padding: 1rem;
+    }
+
+    .navbar button {
+      margin-left: 1rem;
+      padding: 1.5rem 1.5rem;
+      cursor: pointer;
+      background-color: #8e4585;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      padding: 2rem;
+    }
+
+    .product {
+      background: white;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .product img {
+      width: 80%;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+
+    .product h3 {
+      margin: 0.5rem 0;
+    }
+
+    .product p {
+      color: green;
+      font-weight: bold;
+    }
+
+    .product button {
+      background-color: #c2185b;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 0.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .products {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .products {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header style="font-size: xx-large;"><strong>TABLES</strong> </header>
+
+<div class="navbar" style="font-size: larger;">
+  <button onclick="window.location.href='shop.html'">Back to Shop</button>
+  <button onclick="window.location.href='cart.html'">Go to Cart</button>
+</div>
+
+<div class="products" id="products-container">
+  </div>
+
+<script>
+  const defaultTables = [
+    { name: "Coffee Table", price: 7979, img: "https://mysleepyhead.com/media/catalog/product/s/l/sleepyhead_product_ls_309_new.jpg" },
+    { name: "Side Table", price: 8900, img: "https://www.orangetree.in/cdn/shop/files/NouveAccentTableNatural1.jpg?v=1722850382" },
+    { name: "Console Table", price: 12999, img: "https://cdn.decornation.in/wp-content/uploads/2020/03/solid-wooden-console-table-1.jpg" },
+    { name: "Dining Table", price: 23999, img: "https://www.hokybo.com/CompanyData/Product/13MD081A(HG)/1.jpg" },
+    { name: "Nook Table", price: 17499, img: "https://www.wholesaleinteriorsdownloads.com/pictures/product_images/Batch214/11962-9305-9.jpg" },
+    { name: "Bedside Table", price: 2999, img: "https://www.urbanwood.in//image/cache/catalog/bedside-table/topaz/teak/crop-400x281.jpg" },
+    { name: "Dressing Table ", price: 17999, img: "https://damroimages.blob.core.windows.net/damroimages/9097-1.jpg" },
+    { name: "Study Table", price: 13999, img: "https://www.furniselan.com/cdn/shop/products/cabinda-solid-wood-writing-study-table-study-laptop-desk-with-drawer-717386.jpg?v=1679739728" },
+    { name: "Computer Table", price: 10999, img: "https://sognoofficefurniture.com/wp-content/uploads/2022/06/SCT-16.png" },
+    { name: "Foldable Table", price: 4999, img: "https://www.jiomart.com/images/product/original/rv4911szfg/invisible-bed-large-wall-mounted-foldable-study-table-office-table-laptop-table-work-table-glossy-white-product-images-orv4911szfg-p597587997-4-202301161222.jpg?im=Resize=(1000,1000)" },
+    { name: "Nested Table", price: 19999, img: "https://www.auromin.in/cdn/shop/products/71kVEkNwGYS._SL1024_grande.jpg?v=1680179857" },
+    { name: "Ottoman Table", price: 5999, img: "https://m.media-amazon.com/images/I/71Bq3F6oGuL.AC_UF894,1000_QL80.jpg" },
+  ];
+
+  function addToCart(product) {
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  if (!currentUser) {
+    alert("Please log in to add items to your cart.");
+    return;
+  }
+
+  const cartKey = 'cart_${currentUser.email}';
+  let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+
+  const existing = cart.find(item => item.name === product.name);
+  if (existing) {
+    existing.quantity += 1;
+  } else {
+    cart.push({ ...product, quantity: 1 });
+  }
+
+  localStorage.setItem(cartKey, JSON.stringify(cart));
+  alert('${product.name} added to your cart');
+}
+
+function loadTableProducts() {
+  const storedTables= JSON.parse(localStorage.getItem("tables")) || [];
+  const allTables = [...defaultTables, ...storedTables];
+
+  const container = document.getElementById("products-container");
+  container.innerHTML = "";
+
+  allTables.forEach(product => {
+    const card = document.createElement("div");
+    card.className = "product";
+    card.innerHTML = `
+      <img src="${product.img}" alt="${product.name}">
+      <h3>${product.name}</h3>
+      <p>₹${product.price.toLocaleString()}</p>
+      <button>Add to Cart</button>
+    `;
+
+    card.querySelector("button").addEventListener("click", () => addToCart(product));
+    container.appendChild(card);
+  });
+}
+
+function loadAdminTables() {
+  const container = document.getElementById("admin-table-list");
+  const tables = JSON.parse(localStorage.getItem("tables")) || [];
+
+  container.innerHTML = tables.length ? "" : "<p>No admin-added tables.</p>";
+
+  tables.forEach((product, index) => {
+    const card = document.createElement("div");
+    card.className = "product";
+    card.innerHTML = `
+      <img src="${product.img}" alt="${product.name}" style="width:200px; height:150px; object-fit:cover;" />
+      <h3>${product.name}</h3>
+      <p>₹${product.price.toLocaleString()}</p>
+      <button onclick="removeTable(${index})">Delete</button>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function removeTable(index) {
+  let tables = JSON.parse(localStorage.getItem("tables")) || [];
+  if ('confirm(Are you sure you want to delete "${tables[index].name}"?') {
+    tables.splice(index, 1);
+    localStorage.setItem("tables", JSON.stringify(tables));
+    loadAdminTables();
+  }
+}
+
+window.onload = loadTableProducts;
+
+</script>
+
+</body>
+</html>

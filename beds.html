@@ -1,0 +1,200 @@
+<html>
+<head>
+  <title>Maison Interiors - Beds</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-image: url(https://s.tmimgcdn.com/scr/1200x750/275000/bg--gradient-psd-background--beautiful-editable-psd-background_275075-original.jpg);
+      background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    header {
+      background-color: #cc5500;
+      color: white;
+      padding: 3rem;
+      text-align: center;
+      font-size: 1.5rem;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: flex-end;
+      background-image: url(https://s.tmimgcdn.com/scr/1200x750/275000/bg--gradient-psd-background--beautiful-editable-psd-background_275075-original.jpg);
+      
+      background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        padding: 1rem;
+    }
+
+    .navbar button {
+      margin-left: 1rem;
+      padding: 1.5rem 1.5rem;
+      cursor: pointer;
+      background-color: #7b3f00;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      padding: 2rem;
+    }
+
+    .product {
+      background: white;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .product img {
+      width: 90%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+
+    .product h3 {
+      margin: 0.5rem 0;
+    }
+
+    .product p {
+      color: green;
+      font-weight: bold;
+    }
+
+    .product button {
+      background-color: #4a1c1a;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 0.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .products {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .products {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header style="font-size: xx-large;"><strong>BEDS</strong> </header>
+
+<div class="navbar" style="font-size: larger;">
+  <button onclick="window.location.href='shop.html'">Back to Shop</button>
+  <button onclick="window.location.href='cart.html'">Go to Cart</button>
+</div>
+
+<div class="products" id="products-container">
+  </div>
+
+<script>
+  const defaultBeds = [
+    { name: "Solid Wood Bed", price: 17999, img: "https://mysleepyhead.com/media/catalog/product/q/u/queen_size_wooden_bed.jpg" },
+    { name: "Smart Bed", price: 83999, img: "https://shop.gkwretail.com/cdn/shop/products/QueenSizeMulti-FunctionalQueenSizeSmartBed-3_bd5a2528-f83f-48a4-b5df-33e6fa75ccd3.jpg?v=1647345391&width=533" },
+    { name: "Single Bed", price: 14999, img: "https://www.hometown.in/cdn/shop/files/1_a2d9dafe-aaed-4969-b788-d139182f0e94.jpg?v=1747204705" },
+    { name: "Walnut Double Bed", price: 10499, img: "https://www.nilkamalfurniture.com/cdn/shop/files/MARTHURDBWOSTRWNT-1.jpg?v=1702014196" },
+    { name: "French Classic Bed", price: 64999, img: "https://www.curvesandcarvings.com/pub/media/catalog/product/cache/5928e112830e542696586a0d661d5090/f/r/french-design-queen-kolkata-bed-by-curvesandcarvings-bed0166.jpg" },
+    { name: "Kids Bed", price: 32999, img: "https://indiannest.in/cdn/shop/files/rn-image_picker_lib_temp_059ea2a2-2ffe-40f9-9fc7-6c3cc0095d1b.png?v=1707723347" },
+    { name: "Wood Single Trundle Bed", price: 21999, img: "https://ganpatiarts.com/cdn/shop/files/81O9GKn6DTL._SX679.jpg?v=1735969156&width=1214" },
+    { name: "Aria Cushioned Bed", price: 53999, img: "https://cdn.shopaccino.com/plusone/products/teak-pomegranet-326696_m.jpg?v=565" },
+    { name: "Double Bed Sunmica", price: 32499, img: "https://5.imimg.com/data5/SELLER/Default/2024/10/460769795/LA/NW/PU/59329879/double-bed-sunmica-500x500.png" },
+    { name: "Box Storage Bed", price: 15999, img: "https://www.loomandneedles.com/images/product/164/loom-and-needles-sheesham-storage1-beds-new1.jpg" },
+    { name: "King Size Bed", price: 35999, img: "https://www.godrejinterio.com/imagestore/B2C/56101515SD00565/56101515SD00565_A2_500x500.jpg" },
+    { name: "Box Bed", price: 18999, img: "https://ii1.pepperfry.com/media/catalog/product/t/a/494x544/taurus-queen-size-bed-in-oak-and-white-finish-taurus-queen-size-bed-in-oak-and-white-finish-kukplu.jpg" },
+  ];
+
+  function addToCart(product) {
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  if (!currentUser) {
+    alert("Please log in to add items to your cart.");
+    return;
+  }
+
+  const cartKey = `cart_${currentUser.email}`;
+  let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+
+  const existing = cart.find(item => item.name === product.name);
+  if (existing) {
+    existing.quantity += 1;
+  } else {
+    cart.push({ ...product, quantity: 1 });
+  }
+
+  localStorage.setItem(cartKey, JSON.stringify(cart));
+  alert(`${product.name} added to your cart`);
+}
+
+function loadBedProducts() {
+  const storedBeds = JSON.parse(localStorage.getItem("beds")) || [];
+  const allBeds = [...defaultBeds, ...storedBeds];
+
+  const container = document.getElementById("products-container");
+  container.innerHTML = "";
+
+  allBeds.forEach(product => {
+    const card = document.createElement("div");
+    card.className = "product";
+    card.innerHTML = `
+      <img src="${product.img}" alt="${product.name}">
+      <h3>${product.name}</h3>
+      <p>₹${product.price.toLocaleString()}</p>
+      <button>Add to Cart</button>
+    `;
+
+    card.querySelector("button").addEventListener("click", () => addToCart(product));
+    container.appendChild(card);
+  });
+}
+
+function loadAdminBed() {
+  const container = document.getElementById("admin-beds-list");
+  const beds = JSON.parse(localStorage.getItem("beds")) || [];
+
+  container.innerHTML = beds.length ? "" : "<p>No admin-added beds.</p>";
+
+  beds.forEach((product, index) => {
+    const card = document.createElement("div");
+    card.className = "product";
+    card.innerHTML = `
+      <img src="${product.img}" alt="${product.name}" style="width:200px; height:150px; object-fit:cover;" />
+      <h3>${product.name}</h3>
+      <p>₹${product.price.toLocaleString()}</p>
+      <button onclick="removeSofa(${index})">Delete</button>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function removeBed(index) {
+  let beds = JSON.parse(localStorage.getItem("beds")) || [];
+  if (confirm(`Are you sure you want to delete "${beds[index].name}"?`)) {
+    beds.splice(index, 1);
+    localStorage.setItem("beds", JSON.stringify(beds));
+    loadAdminBeds();
+  }
+}
+
+window.onload = loadBedProducts;
+</script>
+
+</body>
+</html>

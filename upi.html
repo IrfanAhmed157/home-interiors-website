@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>UPI Payment - Maison Interiors</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-image: url(https://img.freepik.com/premium-vector/digital-marketing-concept-shopping-online-mobile-application_68971-366.jpg?semt=ais_items_boosted&w=740);
+      background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 80px auto;
+      background: #fff;
+      margin-left: 1.5%;
+      margin-top: 5%;
+      padding: 30px;
+      text-align: center;
+      color: midnightblue;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: indigo;
+    }
+
+    .total {
+      font-size: 1.4rem;
+      margin: 20px 0;
+    }
+
+    .qr {
+      margin: 20px auto;
+      width: 220px;
+      height: 220px;
+      border: 4px solid #ccc;
+      border-radius: 8px;
+      background-image: url(https://docs.lightburnsoftware.com/legacy/img/QRCode/ExampleCode.png);
+      background-size: cover;
+      background-position: center;
+      }
+
+    button {
+      padding: 12px 25px;
+      background-color: darkslateblue;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+      margin-top: 20px;
+    }
+
+    button:hover {
+      background-color: #636e72;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>UPI Payment</h2>
+    <p class="total">Total Amount: ₹<span id="totalAmount">0</span></p>
+
+    <div class="qr"></div>
+    <p>Scan this QR code using your UPI app to pay</p>
+    <button onclick="confirmPayment()">Done</button>
+  </div>
+
+  <script>
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  if (!currentUser) {
+    alert("Please log in first.");
+    window.location.href = "login.html";
+  } else {
+    const cartKey = cart_${currentUser.email};
+    const cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    document.getElementById("totalAmount").textContent = total.toLocaleString();
+
+    window.confirmPayment = function() {
+      window.location.href = "confirm.html";
+    };
+  }
+</script>
+</body>
+</html>

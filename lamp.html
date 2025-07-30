@@ -1,0 +1,199 @@
+<html>
+<head>
+  <title>Maison Interiors - Lamps</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-image: url(https://en.idei.club/uploads/posts/2023-06/1686333592_en-idei-club-p-light-green-bg-dizain-pinterest-19.jpg);
+      background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    header {
+      background-color: #2e8b57;
+      color: white;
+      padding: 3rem;
+      text-align: center;
+      font-size: 1.5rem;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: flex-end;
+      background-image: url(https://en.idei.club/uploads/posts/2023-06/1686333592_en-idei-club-p-light-green-bg-dizain-pinterest-19.jpg);
+      background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      padding: 1rem;
+    }
+
+    .navbar button {
+      margin-left: 1rem;
+      padding: 1.5rem 1.5rem;
+      cursor: pointer;
+      background-color: #43a047;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      padding: 2rem;
+    }
+
+    .product {
+      background: white;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .product img {
+      width: 80%;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+
+    .product h3 {
+      margin: 0.5rem 0;
+    }
+
+    .product p {
+      color: green;
+      font-weight: bold;
+    }
+
+    .product button {
+      background-color: teal;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 0.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .products {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .products {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header style="font-size: xx-large;"><strong>LAMPS</strong> </header>
+
+<div class="navbar" style="font-size: larger;">
+  <button onclick="window.location.href='shop.html'">Back to Shop</button>
+  <button onclick="window.location.href='cart.html'">Go to Cart</button>
+</div>
+
+<div class="products" id="products-container">
+  </div>
+
+<script>
+  const defaultLamps = [
+    { name: "Red Shaded Lamp", price: 799, img: "https://m.media-amazon.com/images/I/71jIfDWFmEL.jpg" },
+    { name: "Ceramic Night Lamp", price: 649, img: "https://m.media-amazon.com/images/I/614ZbUZOAJL.jpg" },
+    { name: "Metal Table Lamp", price: 1549, img: "https://ik.imagekit.io/2xkwa8s1i/img/npl_modified_images/Lishying7125/WTLMPOXLSGLMLS1/WTLMPOXLSGLMLS1_LS_1.jpg?tr=w-3840" },
+    { name: "Modern Bedside Lamp", price: 12699, img: "https://m.media-amazon.com/images/I/71g+9csrTHL.jpg" },
+    { name: "Swing Arm Floor Lamp", price: 2999, img: "https://ouchcart.com/cdn/shop/products/611-7u4leZL._AC_SL1000_2.jpg?v=1721366466" },
+    { name: "Study Lamp", price: 1299, img: "https://assets.ajio.com/medias/sys_master/root/20230607/C1kQ/64805a4c42f9e729d72b03c3/-473Wx593H-466246678-white-MODEL.jpg" },
+    { name: "Floor Lamp ", price: 2199, img: "https://m.media-amazon.com/images/I/614yAwiJSzL._AC_UF894,1000_QL80_.jpg" },
+    { name: "Night Lamp", price: 699, img: "https://m.media-amazon.com/images/I/61FctGSFyyL._AC_UF1000,1000_QL80_.jpg" },
+    { name: "Tall Standing Lamp", price: 5499, img: "https://i.ebayimg.com/images/g/940AAOSwwKhiPDFp/s-l400.jpg" },
+    { name: "Curve Floor Lamp", price: 8499, img: "https://assets.ajio.com/medias/sys_master/root/20240416/P7yE/661dad4416fd2c6e6ab33397/decor_de_maison_black_graceful_curve_floor_lamp.jpg" },
+    { name: "Cordless Lamp", price: 2699, img: "https://m.media-amazon.com/images/S/aplus-media-library-service-media/48160d6f-f6b0-439c-af0d-791b727e6d99.__CR0,0,1512,1701_PT0_SX200_V1___.jpg" },
+    { name: "Kids Lamp", price: 1499, img: "https://m.media-amazon.com/images/I/71ZuvUjKxIL._AC_UF1000,1000_QL80_.jpg" },
+  ];
+
+  function addToCart(product) {
+  const currentUser = 'JSON.parse(localStorage.getItem("currentUser"))';
+  if (!currentUser) {
+    alert("Please log in to add items to your cart.");
+    return;
+  }
+
+  const cartKey = 'cart_${currentUser.email}';
+  let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+
+  const existing = cart.find(item => item.name === product.name);
+  if (existing) {
+    existing.quantity += 1;
+  } else {
+    cart.push({ ...product, quantity: 1 });
+  }
+
+  localStorage.setItem(cartKey, JSON.stringify(cart));
+  alert('${product.name} added to your cart');
+}
+
+function loadLampProducts() {
+  const storedLamps = JSON.parse(localStorage.getItem("lamps")) || [];
+  const allLamps = [...defaultLamps, ...storedLamps];
+
+  const container = document.getElementById("products-container");
+  container.innerHTML = "";
+
+  allLamps.forEach(product => {
+    const card = document.createElement("div");
+    card.className = "product";
+    card.innerHTML = `
+      <img src="${product.img}" alt="${product.name}">
+      <h3>${product.name}</h3>
+      <p>₹${product.price.toLocaleString()}</p>
+      <button>Add to Cart</button>
+    `;
+
+    card.querySelector("button").addEventListener("click", () => addToCart(product));
+    container.appendChild(card);
+  });
+}
+
+function loadAdminLamps() {
+  const container = document.getElementById("admin-lamp-list");
+  const lamps = JSON.parse(localStorage.getItem("lamps")) || [];
+
+  container.innerHTML = lamps.length ? "" : "<p>No admin-added lamps.</p>";
+
+  lamps.forEach((product, index) => {
+    const card = document.createElement("div");
+    card.className = "product";
+    card.innerHTML = `
+      <img src="${product.img}" alt="${product.name}" style="width:200px; height:150px; object-fit:cover;" />
+      <h3>${product.name}</h3>
+      <p>₹${product.price.toLocaleString()}</p>
+      <button onclick="removeSofa(${index})">Delete</button>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function removeLamp(index) {
+  let lamps = JSON.parse(localStorage.getItem("lamps")) || [];
+  if (confirm('Are you sure you want to delete "${lamps[index].name}"?')) {
+    lamps.splice(index, 1);
+    localStorage.setItem("lamps", JSON.stringify(lamps));
+    loadAdminLamps();
+  }
+}
+
+window.onload = loadLampProducts;
+</script>
+
+</body>
+</html>

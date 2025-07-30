@@ -1,0 +1,109 @@
+<html>
+<head>
+  <title>Shop Categories</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-image: url(https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/c74049d0-96e4-4b49-801d-826ec89683cc/d1t6o9j-44e01441-8999-4f54-85f7-9642d8c075c4.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2M3NDA0OWQwLTk2ZTQtNGI0OS04MDFkLTgyNmVjODk2ODNjY1wvZDF0Nm85ai00NGUwMTQ0MS04OTk5LTRmNTQtODVmNy05NjQyZDhjMDc1YzQuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.yvEXH8IN0079J2R-AqhfxKEHZMzANBq1WZjGzeJl4e4);
+      background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+.categories {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 40px;
+  padding: 90px 20px;
+  text-align: center;
+}
+
+.category-card {
+  background-color: #ffffffcc;
+  padding: 10px;
+  border-radius: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.category-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+}
+
+.category-card img {
+  border-radius: 10px;
+  height: 180px;
+  object-fit: cover;
+}
+
+.category-card h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.1rem;
+  color: #3e2723;
+}
+
+header {
+      background: linear-gradient(to right, #4e342e, #6d4c41);
+      padding: 0.001rem;
+      color: #f3e5ab;
+      text-align: center;
+    }
+
+    nav {
+        display:flex;
+        justify-content:center;
+        background-color: #3e2723;
+    }
+    nav a {
+        color: #fce4ec;
+        padding:14px 20px;
+        text-decoration:none;
+        text-align:center;
+    }
+    nav a:hover {
+        background-color: #6d4c41;
+    }
+
+  </style>
+</head>
+<body>
+    <header>
+    
+    <h1><strong>Start Shopping</strong></h1>
+    <p style="font-size: large;">Start Building Your Home Beautifully</p>
+  </header>
+    <nav>
+    <a href="welcome.html">Home</a>
+    <a href="#Shop">Shop</a>
+    <a href="cart.html">My Cart</a>
+    <a href="guidelines.html">Guidelines</a>
+    <a href="contact.html">Contact</a>
+    <a href="about.html">About Us</a>
+</nav>
+  <div class="categories">
+    <a href="sofas.html" class="category-card">
+      <img src="D:\Interior Project\Hopson_Plush_Three_Seater_Sofa.webp" alt="Sofas">
+      <h2>Sofas</h2>
+    </a>
+    <a href="tables.html" class="category-card">
+      <img src="D:\Interior Project\images (1).jpg" alt="Tables">
+      <h2>Tables</h2>
+    </a>
+    <a href="beds.html" class="category-card">
+      <img src="D:\Interior Project\untitled.1274.webp" alt="Beds">
+      <h2>Beds</h2>
+    </a>
+    <a href="lamps.html" class="category-card">
+      <img src="D:\Interior Project\Camel_Luxury_Table_Lamp_with_Fabric_Shade_for_Soft_Light.webp" alt="Lamps">
+      <h2>Lamps</h2>
+    </a>
+    <a href="showpieces.html" class="category-card">
+      <img src="D:\Interior Project\resin-showpieces-bird-tree-key-holder-243400_800x.webp" alt="Showpieces">
+      <h2>Showpieces</h2>
+    </a>
+    
+  </div>
+</body>
+</html>(shop page)
