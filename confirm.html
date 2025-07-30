@@ -100,7 +100,7 @@
   if (!currentUser) {
     productList.innerHTML = "<p>Please log in to see your order details.</p>";
   } else {
-    const cartKey = cart_${currentUser.email};
+    const cartKey = 'cart_${currentUser.email}';
     const cart = JSON.parse(localStorage.getItem(cartKey)) || [];
 
     let total = 0;
@@ -125,7 +125,7 @@
         total += item.price * item.quantity;
       });
 
-      totalAmountDiv.textContent = Total Paid: ₹${total.toLocaleString()};
+      totalAmountDiv.textContent = `Total Paid: ₹${total.toLocaleString()}`;
     }
 
     
