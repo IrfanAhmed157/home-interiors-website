@@ -129,7 +129,7 @@
     return;
   }
 
-  const cartKey = `cart_${currentUser.email}`;
+  const cartKey = 'cart_${currentUser.email}';
   let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
 
   const existing = cart.find(item => item.name === product.name);
