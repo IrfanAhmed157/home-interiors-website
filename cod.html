@@ -141,7 +141,7 @@
     tbody.appendChild(tr);
   });
 
-  document.getElementById("totalAmount").textContent = Total Amount: ₹${total.toFixed(2)};
+  document.getElementById("totalAmount").textContent = `Total Amount: ₹${total.toFixed(2)}`;
 
   localStorage.removeItem(cartKey);
 }
